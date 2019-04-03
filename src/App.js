@@ -9,33 +9,43 @@ const Nav = () =>
 )
 
 class App extends Component {
+
+  state = {
+    todos: [],
+    newTodo: ""
+  }
+
   render() {
     return (
       <>
         <Nav />
         <div className="row box">
-          <input placeholder="Write in here" /><button className="btn btn-primary">Add Todo</button>
+          <input type="text" placeholder="Write in here" onChange={e => {
+            this.setState({newTodo: e.target.value})
+          }}/>
+          <button className="btn btn-primary" onClick={e => {
+            this.setState(state => ({todos: state.todos.concat(state.newTodo)}))
+          }}>Add Todo</button>
         </div>
         <div className="container">
           <div className="row">
-            <div className="col-sm-12 col-lg-4">
-              <div className="card">
-                <div className="top"><span className="fas fa-times-circle" /></div>
-                <div className="bottom"><h2>Wash Dishes</h2></div>
+            {
+              this.state.todos.length === 0 && <div className="col-sm-12 text-center mt-5"><h3>Add your todos!</h3></div>
+            }
+            {
+              this.state.todos.map(todo => (
+              <div className="col-sm-12 col-lg-4">
+                <div className="card">
+                  <div className="top">
+                    <span className="fas fa-times-circle" onClick={e => {
+                      this.setState(state => ({todos: state.todos.filter(todoName => todoName != todo)}))
+                    }} />
+                  </div>
+                  <div className="bottom"><h2>{todo}</h2></div>
+                </div>
               </div>
-            </div>
-            <div className="col-sm-12 col-lg-4">
-              <div className="card">
-                <div className="top"><span className="fas fa-times-circle" /></div>
-                <div className="bottom"><h2>Do Laundry</h2></div>
-              </div>
-            </div>
-            <div className="col-sm-12 col-lg-4">
-              <div className="card">
-                <div className="top"><span className="fas fa-times-circle" /></div>
-                <div className="bottom"><h2>Clean House</h2></div>
-              </div>
-            </div>
+              ))
+            }
           </div>
         </div>
       </>
