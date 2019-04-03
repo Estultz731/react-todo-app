@@ -13,7 +13,7 @@ class App extends Component {
     return (
       <>
         <Nav />
-        <div className="row">
+        <div className="row box">
           <input placeholder="Write in here" /><button className="btn btn-primary">Add Todo</button>
         </div>
         <div className="container">
